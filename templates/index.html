@@ -1,3 +1,420 @@
-pip install -U w3connect
+<!DOCTYPE html>
+<html lang="en">
 
-python -m w3connect
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>w3connect - AI Private Key Vault</title>
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #16161f;
+            --accent: #00ff88;
+            --accent-glow: rgba(0, 255, 136, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #8b8b9e;
+            --border: #2a2a3a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent), #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .tagline {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 40px 0;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 30px var(--accent-glow);
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), #00ccff);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 1.2rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .install-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .install-section h2 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .command-block {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .command-label {
+            background: var(--accent);
+            color: var(--bg-primary);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .command {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            word-break: break-all;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-left: auto;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .copy-btn.copied {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .supported-ai {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .supported-ai h2 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+        }
+
+        .ai-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .ai-badge {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+        }
+
+        .ai-badge:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .terminal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            font-size: 0.85rem;
+            margin-top: 40px;
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red {
+            background: #ff5f56;
+        }
+
+        .dot-yellow {
+            background: #ffbd2e;
+        }
+
+        .dot-green {
+            background: #27c93f;
+        }
+
+        .terminal-line {
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .terminal-output {
+            color: var(--accent);
+        }
+
+        .terminal-prompt {
+            color: #ff79c6;
+        }
+
+        .glow-line {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            margin: 0 auto 30px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 60px;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .loading {
+            animation: pulse 1.5s infinite;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">&lt;/&gt; w3connect</div>
+            <p class="tagline">Secure Private Key Solution for the AI Era</p>
+        </header>
+
+        <div class="glow-line"></div>
+
+        <div class="hero">
+            <h1>Let AI Safely<span> Control Wallets</span><br>Zero Private Key Exposure</h1>
+            <p>w3connect is a secure private key vault designed for AI agents, preventing LLMs from directly accessing
+                private keys while providing powerful blockchain interaction capabilities.</p>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🔐</div>
+                <h3>Private Key Isolation</h3>
+                <p>Private keys are securely stored. AI can only perform authorized operations without direct access to
+                    sensitive keys.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Plug & Play AI</h3>
+                <p>Seamlessly integrates with opencode, codex, claude, openclaw, nanobot and other major AI tools.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Permission Control</h3>
+                <p>Fine-grained permission management with configurable limits, expiration times, and operation types.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔐</div>
+                <h3>Google / Microsoft Auth</h3>
+                <p>Two-factor authentication for transactions. Approve transfers via Google Auth or Microsoft Auth for
+                    enhanced security.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔗</div>
+                <h3>Multi-Chain Support</h3>
+                <p>One-stop support for Base, Zentra, and other major blockchains.</p>
+            </div>
+            <!-- <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Audit Logging</h3>
+                <p>Complete transaction logs for all AI-initiated operations with real-time fund security monitoring.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚙️</div>
+                <h3>Flexible Configuration</h3>
+                <p>Easily manage multiple wallets and AI access permissions through configuration files.</p>
+            </div> -->
+        </div>
+
+        <div class="install-section">
+            <h2>// Quick Start</h2>
+            <div class="command-block">
+                <span class="command-label">Install</span>
+                <span class="command">pip install -U w3connect</span>
+                <button class="copy-btn" onclick="copyToClipboard('pip install -U w3connect')">Copy</button>
+            </div>
+            <div class="command-block">
+                <span class="command-label">Run</span>
+                <span class="command">python -m w3connect</span>
+                <button class="copy-btn" onclick="copyToClipboard('python -m w3connect')">Copy</button>
+            </div>
+        </div>
+
+        <div class="supported-ai">
+            <h2>Supported AI Tools</h2>
+            <div class="ai-list">
+                <span class="ai-badge">opencode</span>
+                <span class="ai-badge">codex</span>
+                <span class="ai-badge">claude</span>
+                <span class="ai-badge">openclaw</span>
+                <span class="ai-badge">nanobot</span>
+                <span class="ai-badge">and more...</span>
+            </div>
+        </div>
+
+        <div class="terminal">
+            <div class="terminal-header">
+                <span class="terminal-dot dot-red"></span>
+                <span class="terminal-dot dot-yellow"></span>
+                <span class="terminal-dot dot-green"></span>
+            </div>
+            <div class="terminal-line"><span class="terminal-prompt">$</span> python -m w3connect</div>
+            <div class="terminal-line loading">Starting w3connect service...</div>
+            <div class="terminal-output">✓ Service started at http://127.0.0.1:5333</div>
+            <div class="terminal-output">✓ Loaded 3 wallets</div>
+            <div class="terminal-output">✓ AI interface ready</div>
+            <div class="terminal-output">✓ 2FA enabled (Google/Microsoft Auth)</div>
+            <div class="terminal-line">&nbsp;</div>
+            <div class="terminal-line"><span class="terminal-prompt">w3connect></span> _</div>
+        </div>
+
+        <footer>
+            <p>w3connect — Secure blockchain interaction for AI</p>
+        </footer>
+    </div>
+
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                event.target.textContent = 'Copied!';
+                event.target.classList.add('copied');
+                setTimeout(() => {
+                    event.target.textContent = 'Copy';
+                    event.target.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+
+</html>
