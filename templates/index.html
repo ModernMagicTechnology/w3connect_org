@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>w3connect - AI Private Key Vault</title>
+    <title>w3connect - Blockchain Infrastructure for AI & Humans</title>
     <style>
         :root {
             --bg-primary: #0a0a0f;
@@ -77,7 +77,26 @@
         .hero p {
             color: var(--text-secondary);
             max-width: 600px;
-            margin: 0 auto;
+            margin: 0 auto 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), #00ccff);
+            color: var(--bg-primary);
+            padding: 14px 36px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px var(--accent-glow);
         }
 
         .features {
@@ -304,15 +323,19 @@
     <div class="container">
         <header>
             <div class="logo">&lt;/&gt; w3connect</div>
-            <p class="tagline">Secure Private Key Solution for the AI Era</p>
+            <p class="tagline">Blockchain Infrastructure — TUI Tools for AI Agents & Humans</p>
         </header>
 
         <div class="glow-line"></div>
 
         <div class="hero">
-            <h1>Let AI Safely<span> Connects to Web3</span><br>Easily to Crypto Applications</h1>
-            <p>w3connect is a secure private key vault designed for AI agents, preventing LLMs from directly accessing
-                private keys while providing powerful blockchain interaction capabilities.</p>
+            <h1>Simplify Blockchain Access<br>for <span>AI Agents</span> & <span>Humans</span></h1>
+            <p>w3connect is open blockchain infrastructure with a built-in TUI tool, designed to lower the barrier
+                for both AI agents and developers to interact with Web3 — manage wallets, deploy contracts,
+                explore on-chain data, and more.</p>
+            <a href="http://testnet.w3connect.org/" target="_blank" class="cta-button">
+                🚀 Launch Block Explorer
+            </a>
         </div>
 
         <div class="features">
@@ -329,31 +352,28 @@
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🛡️</div>
-                <h3>Permission Control</h3>
-                <p>Fine-grained permission management with configurable limits, expiration times, and operation types.
-                </p>
+                <h3>Asset Transfer & Bridge</h3>
+                <p>Send assets and bridge across chains with AI-assisted signing, permission controls, and
+                    configurable limits.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🔐</div>
-                <h3>Google / Microsoft Auth</h3>
-                <p>Two-factor authentication for transactions. Approve transfers via Google Auth or Microsoft Auth for
-                    enhanced security.</p>
+                <div class="feature-icon">💾</div>
+                <h3>Blockchain Storage</h3>
+                <p>Decentralized on-chain storage for AI agent data, dApp content, and blockchain state.
+                    <span style="color: var(--accent);">Coming Soon</span>.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🔗</div>
-                <h3>Multi-Chain Support</h3>
-                <p>One-stop support for Base, Zentra, and other major blockchains.</p>
-            </div>
-            <!-- <div class="feature-card">
                 <div class="feature-icon">📊</div>
                 <h3>Audit Logging</h3>
-                <p>Complete transaction logs for all AI-initiated operations with real-time fund security monitoring.</p>
+                <p>Complete transaction logs for all AI-initiated and human-initiated operations with real-time fund
+                    monitoring.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">⚙️</div>
-                <h3>Flexible Configuration</h3>
-                <p>Easily manage multiple wallets and AI access permissions through configuration files.</p>
-            </div> -->
+                <h3>TUI Configuration</h3>
+                <p>Manage wallets, permissions, and network settings directly from the terminal with the built-in TUI
+                    tool.</p>
+            </div>
         </div>
 
         <div class="install-section">
@@ -399,7 +419,7 @@
         </div>
 
         <footer>
-            <p>w3connect — Secure blockchain interaction for AI</p>
+            <p>w3connect — Blockchain infrastructure for AI & humans</p>
         </footer>
     </div>
 
